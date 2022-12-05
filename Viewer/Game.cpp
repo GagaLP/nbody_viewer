@@ -123,7 +123,9 @@ void Game::update() {
 
 	static int x = 0;
 
-    currentFrame = x++ % particlePositionsFrames.size();
+    if (!paused) {
+        currentFrame = x++ % particlePositionsFrames.size();
+    }
 
 	shader.SetValue(shader.locs[SHADER_LOC_VECTOR_VIEW], &position, SHADER_UNIFORM_VEC3);
 }
