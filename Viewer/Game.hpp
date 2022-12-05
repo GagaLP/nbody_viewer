@@ -16,7 +16,7 @@ class Game {
 	bool paused = true;
 
 	raylib::Vector3 position = { 20.0f, 20.0f, 20.0f };
-	raylib::Vector3 target = { 0.0f, 0.0f, 0.0f };
+//	raylib::Vector3 target = { 0.0f, 0.0f, 0.0f };
 	raylib::Vector3 up = { 0.0f, 1.0f, 0.0f };
 
 	std::vector<Sphere> spheres;
@@ -31,10 +31,10 @@ class Game {
     int currentFrame = 0;
 
   public:
-	Game(int width, int height, const std::string& title, int capFPS);
+	Game(int width, int height, const std::string& title, int capFPS, std::string_view shaderPath);
 	~Game();
 
-    void initParticles();
+    void initParticles(std::string_view particlePath);
     void generateSpheres(bool single);
 
 	void init();

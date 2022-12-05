@@ -6,7 +6,7 @@
 
 constexpr int GLSL_VERSION = 330;
 
-Game::Game(int width, int height, const std::string& title, int capFPS)
+Game::Game(int width, int height, const std::string& title, int capFPS, std::string_view shaderPath)
     : window(width, height, title),
       shader("./shader/lighting.vs", "./shader/lighting.fs"),
       light(LightType::LIGHT_POINT, true, { 20, 20, 20 }, raylib::Vector3::Zero(), WHITE, 0.0f) {
@@ -15,23 +15,25 @@ Game::Game(int width, int height, const std::string& title, int capFPS)
 	int ambientLoc = shader.GetLocation("ambient");
 	shader.SetValue(ambientLoc, &ambientColor, SHADER_UNIFORM_VEC4);
 
-    initParticles();
+    initParticles(shaderPath);
     generateSpheres(true);
 
     float min_x, max_x, min_y, max_y, min_z, max_z;
-    std::for_each(particlePositionsFrames[0].begin(), particlePositionsFrames[0].end(), [&](raylib::Vector3& position) {
-        min_x = std::min(min_x, position.x);
-        max_x = std::max(max_x, position.x);
-        min_y = std::min(min_y, position.y);
-        max_y = std::max(max_y, position.y);
-        min_z = std::min(min_z, position.z);
-        max_z = std::max(max_z, position.z);
+    std::for_each(particlePositionsFrames[0].begin(), particlePositionsFrames[0].end(), [&](raylib::Vector3& p) mutable {
+        min_x = std::min(min_x, p.x);
+        max_x = std::max(max_x, p.x);
+        min_y = std::min(min_y, p.y);
+        max_y = std::max(max_y, p.y);
+        min_z = std::min(min_z, p.z);
+        max_z = std::max(max_z, p.z);
     });
 
     std::cout << (max_x - min_x) / 2 << " " << (max_y - min_y) / 2 << " " << (max_z - min_z) / 2 << std::endl;
-    raylib::Vector3 center = {(min_x + max_x) / 2 + min_x, (min_y + max_y) / 2 + min_y, (min_z + max_z) / 2 + min_z};
+    raylib::Vector3 target = {(min_x + max_x) / 2 + min_x, (min_y + max_y) / 2 + min_y, (min_z + max_z) / 2 + min_z};
+    position = raylib::Vector3(max_x, max_y, max_z);
+    camera = raylib::Camera3D(position, target, up, 45.0f, CAMERA_PERSPECTIVE);
 
-    camera = raylib::Camera3D(position, center, up, 45.0f, CAMERA_PERSPECTIVE);
+    light.position = position;
 
     light.defineShader(shader);
 
@@ -55,8 +57,8 @@ void Game::generateSpheres(bool single) {
 }
 
 
-void Game::initParticles() {
-    std::ifstream file("output.txt");
+void Game::initParticles(std::string_view shaderPath) {
+    std::ifstream file(shaderPath);
     std::string line;
     std::vector<raylib::Vector3> particlePositions;
     while (std::getline(file, line)) {
