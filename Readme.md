@@ -5,6 +5,9 @@ It is written in C++ and uses Raylib (OpenGL as backend) for rendering.
 
 ## Build
 
+Everything can be built with CMake. All dependencies are included via CMake's FetchContent. 
+The only requirement is a C++17 compiler and OpenGL 3.3.
+
 ### Linux
 Then you can build the project with the following commands:
 
