@@ -1,9 +1,8 @@
 #include "Light.hpp"
 
-Light::Light(LightType type, bool enabled, Vector3&& position, Vector3&& target, Color&& color,
-             float attenuation)
+Light::Light(LightType type, bool enabled, Vector3&& position, Vector3&& target, Color&& color)
     : type(static_cast<int>(type)), enabled(enabled), position(position), target(target),
-      color(color), attenuation(attenuation){};
+      color(color){}
 
 void Light::updateLightValues(raylib::Shader& shader) {
 	shader.SetValue(enabledLoc, &enabled, SHADER_UNIFORM_INT);
@@ -24,7 +23,6 @@ void Light::defineShader(raylib::Shader& shader) {
 	positionLoc = shader.GetLocation("lights.position");
 	targetLoc = shader.GetLocation("lights.target");
 	colorLoc = shader.GetLocation("lights.color");
-//	attenuationLoc = shader.GetLocation("lights.attenuation");
 
 	updateLightValues(shader);
 }

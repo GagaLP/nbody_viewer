@@ -31,10 +31,10 @@ class Game {
     int currentFrame = 0;
 
   public:
-	Game(int width, int height, const std::string& title, int capFPS, std::string_view shaderPath);
+	Game(int width, int height, const std::string& title, int capFPS, std::string shaderPath);
 	~Game();
 
-    void initParticles(std::string_view particlePath);
+    void initParticles(std::string particlePath);
     void generateSpheres(bool single);
 
 	void init();

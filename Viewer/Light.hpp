@@ -11,14 +11,12 @@ struct Light {
 	Vector3 position;
 	Vector3 target;
 	Color color;
-	float attenuation;
 
 	int enabledLoc{};
 	int typeLoc{};
 	int positionLoc{};
 	int targetLoc{};
 	int colorLoc{};
-	int attenuationLoc{};
 
 	void draw() const;
 
@@ -26,5 +24,5 @@ struct Light {
 
 	void defineShader(raylib::Shader& shader);
 
-	Light(LightType type, bool enabled, Vector3&& position, Vector3&& target, Color&& color, float attenuation);
+	Light(LightType type, bool enabled, Vector3&& position, Vector3&& target, Color&& color);
 };

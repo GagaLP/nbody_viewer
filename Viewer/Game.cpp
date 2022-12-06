@@ -6,10 +6,10 @@
 
 constexpr int GLSL_VERSION = 330;
 
-Game::Game(int width, int height, const std::string& title, int capFPS, std::string_view shaderPath)
+Game::Game(int width, int height, const std::string& title, int capFPS, std::string shaderPath)
     : window(width, height, title),
       shader("./shader/lighting.vs", "./shader/lighting.fs"),
-      light(LightType::LIGHT_POINT, true, { 20, 20, 20 }, raylib::Vector3::Zero(), WHITE, 0.0f) {
+      light(LightType::LIGHT_POINT, true, { 20, 20, 20 }, raylib::Vector3::Zero(), WHITE) {
 	shader.locs[SHADER_LOC_VECTOR_VIEW] = shader.GetLocation("viewPos");
 
 	int ambientLoc = shader.GetLocation("ambient");
@@ -57,7 +57,7 @@ void Game::generateSpheres(bool single) {
 }
 
 
-void Game::initParticles(std::string_view shaderPath) {
+void Game::initParticles(std::string shaderPath) {
     std::ifstream file(shaderPath);
     std::string line;
     std::vector<raylib::Vector3> particlePositions;
