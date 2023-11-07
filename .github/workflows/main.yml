@@ -1,0 +1,30 @@
+name: Build and Deploy
+on: [push]
+permissions:
+  contents: write
+jobs:
+  build-and-deploy:
+    concurrency: ci-${{ github.ref }} # Recommended if you intend to make multiple deployments in quick succession.
+    runs-on: ubuntu-latest
+    steps:
+      - uses: mymindstorm/setup-emsdk@v11
+      
+      - name: Checkout 🛎️
+        uses: actions/checkout@v3
+
+      - name: Install and Build 🔧 # This example project is built using npm and outputs the result to the 'build' folder. Replace with the commands required to build your project, or remove this step entirely if your site is pre-built.
+        run: |
+          mkdir build
+          cd build
+          emcmake cmake ..
+          emmake make
+          cd ..
+          mkdir docs
+          mv build/main.js build/main.wasm build/index.html build/main.data ./docs
+          mkdir docs/resources
+          mv build/resources/lighting.fs build/resources/lighting.vs ./docs/resources
+
+      - name: Deploy 🚀
+        uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          folder: docs # The folder the action should deploy.
