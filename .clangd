@@ -1,0 +1,17 @@
+CompileFlags:
+    Add: [
+        -target,
+        wasm32-unknown-emscripten,
+        -DEMSCRIPTEN,
+        -D__EMSCRIPTEN_major__=3,
+        -D__EMSCRIPTEN_minor__=1,
+        -D__EMSCRIPTEN_tiny__=46,
+        -fvisibility=default,
+        -enable-emscripten-cxx-exceptions,
+        -enable-emscripten-sjlj,
+        -Werror=implicit-function-declaration,
+        -Xclang,
+        -isystem/opt/homebrew/Cellar/emscripten/3.1.46/libexec/cache/sysroot/include/SDL,
+        --sysroot=/opt/homebrew/Cellar/emscripten/3.1.46/libexec/cache/sysroot,
+        -iwithsysroot/include/compat
+    ]

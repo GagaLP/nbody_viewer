@@ -1,3 +1,21 @@
-# Project exclude paths
-**cmake-build-debug.nosync
+# clangd compile commands
+**compile_commands.json
+
+# IDE specific files
 **.idea
+**.vscode
+
+# build folders (nosync) because of local sync to cloud
+**cmake-build-debug.nosync
+**build.nosync
+**build_test.nosync
+**build_web.nosync
+
+# some arbitrary cache files
+**.cache
+
+# specific files only used for local development and not for the project
+**_nogit
+
+# macOS specific files
+**.DS_Store

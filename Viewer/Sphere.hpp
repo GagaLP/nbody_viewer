@@ -3,17 +3,17 @@
 #include <raylib-cpp.hpp>
 
 class Sphere {
-	raylib::Mesh mesh;
-
   public:
-	raylib::Material material;
+    raylib::Mesh     mesh;
+    raylib::Material material;
 
-	Sphere(float radius, raylib::Color color);
+    Sphere(float radius, raylib::Color color);
 
-	Sphere(Sphere&& sphere);
-//	Sphere(const raylib::Mesh& mesh, const raylib::Material& material);
-	~Sphere() = default;
+    Sphere(Sphere&& sphere);
 
-	void draw(const raylib::Vector3& position);
+    ~Sphere() = default;
+
+    void updateRadius(const float radius);
+
+    void draw(const raylib::Vector3& position);
 };
-

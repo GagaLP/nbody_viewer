@@ -1,17 +1,18 @@
-#version 330
+#version 100
+
+precision mediump float;
 
 // Input vertex attributes (from vertex shader)
-in vec3 fragPosition;
-in vec2 fragTexCoord;
-in vec4 fragColor;
-in vec3 fragNormal;
+varying vec3 fragPosition;
+varying vec2 fragTexCoord;
+varying vec4 fragColor;
+varying vec3 fragNormal;
 
 // Input uniform values
 uniform sampler2D texture0;
 uniform vec4 colDiffuse;
 
-// Output fragment color
-out vec4 finalColor;
+// NOTE: Add here your custom variables
 
 #define     LIGHT_DIRECTIONAL       0
 #define     LIGHT_POINT             1
@@ -37,11 +38,14 @@ uniform vec3 viewPos;
 
 void main()
 {
-    vec4 texelColor = texture(texture0, fragTexCoord);
+    // Texel color fetching from texture sampler
+    vec4 texelColor = texture2D(texture0, fragTexCoord);
     vec3 lightDot = vec3(0.0);
     vec3 normal = normalize(fragNormal);
     vec3 viewD = normalize(viewPos - fragPosition);
     vec3 specular = vec3(0.0);
+
+    // NOTE: Implement here your fragment shader code
 
     if (lights.enabled == 1)
     {
@@ -65,9 +69,9 @@ void main()
         specular += specCo;
     }
 
-    finalColor = (texelColor*((colDiffuse + vec4(specular, 1.0))*vec4(lightDot, 1.0)));
-    finalColor += texelColor*(ambient/10.0)*colDiffuse;
+    vec4 finalColor = (texelColor*((colDiffuse + vec4(specular, 1.0))*vec4(lightDot, 1.0)));
+    finalColor += texelColor*(ambient/10.0);
 
     // Gamma correction
-    finalColor = pow(finalColor, vec4(1.0/2.2));
+    gl_FragColor = pow(finalColor, vec4(1.0/2.2));
 }
