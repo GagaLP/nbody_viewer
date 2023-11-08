@@ -7,7 +7,9 @@ class OrbitalCamera {
         : camera() {}
 
     OrbitalCamera(raylib::Vector3 position, raylib::Vector3 target)
-        : camera(position, target, {0.0f, 1.0f, 0.0f}, 45.0f, CAMERA_PERSPECTIVE) {}
+        : camera(position, target, {0.0f, 1.0f, 0.0f}, 45.0f, CAMERA_PERSPECTIVE) {
+        camDist = (position - target).Length();
+    }
 
     void handleInput() {
         if (IsKeyDown(KEY_W) || IsKeyDown(KEY_UP)) {
@@ -60,7 +62,7 @@ class OrbitalCamera {
 
     float camDist   = 10;
     float rotAngle  = 45;
-    float tiltAngle = 45;
+    float tiltAngle = -45;
 
     float rotSpeed = 0.25f;
 };
