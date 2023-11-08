@@ -60,13 +60,18 @@ The different time steps are separated by two empty lines.
 
 The following controls are available:
 
-- `W`/`S`/`A`/`D`/`C`/`E`: Move the camera
-- `R`/`F`: Movement speed
-- `ESC`: Exit the program
-- `P`: Debug mode
+- `W`/`S`/`A`/`D`/`left`/`right`/`up`/`down`: Move the camera
+- `ESC`: Exit the program (not possible in Web mode)
+- `P`: Debug mode (shows light source and FPS)
 - `Q`: Toggle pause mode
+- some other controls exist, but are only for testing purposes
+
+To upload a file just drag and drop it into the window/browser.
+
+## Web
+A web hosted version is available at [https://gagalp.github.io/nbody_viewer/](https://gagalp.github.io/nbody_viewer/).
 
 ## Screenshots
 
 ![Screenshot 1](./screenshots/screenshot_1.png)
-![Screenshot 1](./screenshots/screenshot_2.png)
+![Screenshot 2](./screenshots/screenshot_2.png)
